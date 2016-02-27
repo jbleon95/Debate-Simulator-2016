@@ -6,11 +6,11 @@ rubio_file = open("rubio.txt", "r")
 kasich_file = open("kasich.txt", "r")
 carson_file = open("carson.txt", "r")
 
-mcTrump = MarkovChain("./trump")
-mcCruz = MarkovChain("./cruz")
-mcRubio = MarkovChain("./rubio")
-mcKasich = MarkovChain("./kasich")
-mcCarson = MarkovChain("./carson")
+mcTrump = MarkovChain("./trumpdb")
+mcCruz = MarkovChain("./cruzdb")
+mcRubio = MarkovChain("./rubiodb")
+mcKasich = MarkovChain("./kasichdb")
+mcCarson = MarkovChain("./carsondb")
 
 
 trumpText = trump_file.read()
@@ -24,6 +24,12 @@ mcCruz.generateDatabase(cruzText)
 mcRubio.generateDatabase(rubioText)
 mcKasich.generateDatabase(kasichText)
 mcCarson.generateDatabase(carsonText)
+
+mcTrump.dumpdb()
+mcCruz.dumpdb()
+mcRubio.dumpdb()
+mcKasich.dumpdb()
+mcCarson.dumpdb()
 
 print mcTrump.generateString() + ".\n"
 print mcCruz.generateString() + ".\n"
