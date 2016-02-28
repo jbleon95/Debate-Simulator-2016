@@ -1,10 +1,14 @@
+<CandName@Label>:
+    font_size: 18
+    color: 0, 0, 0, 1
+
 <drawMenu>:    
     canvas:
         Color: 
-            rgba: 255, 255, 255, .8
+            rgba: 255, 255, 255, 1
         Rectangle:
-            pos: 0 , 0
-            size: self.width, self.height
+            pos: self.pos
+            size: self.size
 
 
     Button:
@@ -17,6 +21,37 @@
         text: 'Submit!'
         size: self.width, self.height
 
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) + 180
+        text: 'Trump'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) + 120
+        text: 'Cruz'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) + 60
+        text: 'Rubio'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5)
+        text: 'Kasich'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) - 60
+        text: 'Carson'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) - 120
+        text: 'Bush'
+
+    CandName:
+        pos: (root.width * .5) - 125, (root.height * .5) - 180
+        text: 'Christie'
+
 <drawChat>:
     BoxLayout:
+        size: self.size
+        orientation: 'veritcal'
         rows: 10
+
