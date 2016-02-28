@@ -10,7 +10,6 @@
             pos: self.pos
             size: self.size
 
-
     Button:
         id: submit_button
         font_size: 18
@@ -51,7 +50,20 @@
 
 <drawChat>:
     BoxLayout:
-        size: self.size
-        orientation: 'veritcal'
-        rows: 10
+        canvas:
+            Color:
+                rgba: 0, 1, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: 'vertical'
+        rows: 7
+        Button:
+            text: '1'
+        Button:
+            text: '2'
 
+    Label:
+        color: 0, 0, 0, 1
+        text: app.speaker
+        pos: root.width /2, root.height /2
