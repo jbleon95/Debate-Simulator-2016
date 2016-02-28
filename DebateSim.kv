@@ -52,18 +52,18 @@
     BoxLayout:
         canvas:
             Color:
-                rgba: 0, 1, 0, 1
+                rgba: 0, 0, 0, 1
             Rectangle:
-                pos: self.pos
-                size: self.size
+                pos: 0, 0
+                size: root.width, root.height
         orientation: 'vertical'
         rows: 7
-        Button:
-            text: '1'
-        Button:
-            text: '2'
+        Label:
+            text: app.speaker
+        Label:
+            text: app.speaker
 
-    Label:
-        color: 0, 0, 0, 1
-        text: app.speaker
-        pos: root.width /2, root.height /2
+    # Label:
+    #     color: 0, 0, 0, 1
+    #     text: app.speaker
+    #     pos: root.width /2, root.height /2

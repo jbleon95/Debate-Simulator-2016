@@ -26,11 +26,11 @@ class DebateSimApp(App):
 	#kivy.resources.resource_add_path('/profpics')
 	#candidates = ["Trump", "Cruz", "Rubio", "Kasich", "Carson", "Bush", "Christie"]
 	
-	speaker = "Bluhaha!"
+	speaker = "text...."
 	Image(source='profpics/trump.jpg')
 	def build(self):
 		self.load_kv('DebateSim.kv')
-		return drawMenu()
+		return drawChat()
 
 if __name__ == "__main__":
     DebateSimApp().run()
