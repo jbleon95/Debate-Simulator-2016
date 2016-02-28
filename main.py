@@ -27,7 +27,6 @@ class DebateSimApp(App):
 	#candidates = ["Trump", "Cruz", "Rubio", "Kasich", "Carson", "Bush", "Christie"]
 	
 	speaker = "Bluhaha!"
-	Image(source='profpics/trump.jpg')
 	def build(self):
 		self.load_kv('DebateSim.kv')
 		return drawMenu()
