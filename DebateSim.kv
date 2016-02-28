@@ -1,0 +1,22 @@
+<drawMenu>:    
+    canvas:
+        Color: 
+            rgba: 255, 255, 255, .8
+        Rectangle:
+            pos: 0 , 0
+            size: self.width, self.height
+
+
+    Button:
+        id: submit_button
+        font_size: 18
+        width: 125
+        height: 50
+        center_x: root.width * .5
+        center_y: root.height * .15
+        text: 'Submit!'
+        size: self.width, self.height
+
+<drawChat>:
+    BoxLayout:
+        rows: 10
