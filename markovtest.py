@@ -1,24 +1,33 @@
-from pymarkovchain import MarkovChain
+candidateList = ["Trump", "Rubio", "Christie", "Cruz", "Carson", "Jeb", "Kasich"]
+candidateInfo = {}
 
-carson_file = open("transcripts/cruz.txt", "r")
+z = 0
+for name in candidateList:
+	if name == "Trump":
+		info = [["Donald", "Donald's", "Trump", "Trump's", "Don"], "Mr. Trump", "TRUMP: "]
+	elif name == "Cruz":
+		info = [["Cruz", "Cruz's", "Ted", "Ted's", "Rafeal"], "Senator Cruz", "CRUZ: "]
+	elif name == "Rubio":
+		info = [["Marco", "Marco's", "Rubio", "Rubio's"], "Senator Rubio", "RUBIO: "]
+	elif name == "Kasich":
+		info = [["Kasich", "Kasich's"], "Governor Kasich", "KASICH: "]
+	elif name == "Carson":
+		info = [["Ben", "Ben's", "Doctor", "Carson", "Carson's"], "Dr. Carson", "CARSON: "]
+	elif name == "Jeb":
+		info = [["Jeb", "JEB", "Jeb's", "JEB's", "Bush", "Bush's"], "Governor Bush", "BUSH: "]
+	elif name == "Christie":
+		info = [["Chris", "Christie", "Christie's"] , "Governor Christie", "CHRISTIE: "]
+	candidateInfo[z] = info
+	z += 1
 
-carson_text = carson_file.read()
+def responded(msg):
+	for word in msg.split():
+		for key in candidateInfo:
+			if word in candidateInfo[key][0]:
+				return key
+	return None
 
-mc = MarkovChain("./cruzbase")
+mess = "And while Donald Trump brought up the fact that Governor Kasich is supporting spending more money on drug treatment and mental health."
 
-string = mc.generateString()
-
-print string
-
-trump_names = ["Donald", "Donald's", "Trump", "Trump's", "Don"]
-jeb_names = ["Jeb", "JEB", "Jeb's", "JEB's", "Bush", "Bush's"]
-cruz_names = ["Cruz", "Cruz's", "Ted", "Ted's", "Rafeal"]
-rubio_names = ["Marco", "Marco's", "Rubio", "Rubio's"]
-kasich_names = ["Kasich", "Kasich's"]
-christie_names = ["Chris", "Christie", "Christie's"]
-carson_names = ["Ben", "Ben's", "Doctor", "Carson", "Carson's"]
-
-for x in string.split():
-	if x in trump_names:
-		print "\nTrump Mentioned"
-		break
+if responded(mess) != None:
+	print "RESPONDED " + str(responded(mess))
