@@ -55,4 +55,3 @@ for x in xrange(0,99):
 			print trumpList[x]
 			print len(trumpList[x].split())
 			done = 1
-
