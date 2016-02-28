@@ -40,7 +40,6 @@ mcChristie.dumpdb()
 def modQuestion(candidate, num):
 	return "MODERATOR: " + candidateInfo[candidate][2] + questions.questions[num][0]  + "\n"
 
-
 #Responds to a question on topic if it can, else picks random message
 def response(candidate, questionNum = None):
 	stringList = []
@@ -75,8 +74,6 @@ def responded(msg):
 				return key
 	return None
 
-candidateInfo = {}
-
 mcTrump = MarkovChain("db/trumpdb")
 mcCruz = MarkovChain("db/cruzdb")
 mcRubio = MarkovChain("db/rubiodb")
@@ -87,6 +84,7 @@ mcChristie = MarkovChain("db/christiedb")
 
 #List of candidates to be included in Debate
 candidateList = ["Trump", "Rubio", "Christie", "Cruz", "Carson", "Jeb", "Kasich"]
+candidateInfo = {}
 
 z = 0
 for name in candidateList:
