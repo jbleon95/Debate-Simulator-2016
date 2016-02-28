@@ -36,64 +36,46 @@ mcJeb.dumpdb()
 mcChristie.dumpdb()
 """
 
+#Asks a moderator question to the randomly chosen candidate
 def modQuestion(candidate, num):
-	return "MODERATOR: " + formalCandidates[candidateNum] + questions.questions[num][0]  + "\n"
+	return "MODERATOR: " + candidateInfo[candidate][2] + questions.questions[num][0]  + "\n"
 
+
+#Responds to a question on topic if it can, else picks random message
 def response(candidate, questionNum = None):
 	stringList = []
-	if candidate == 0:
-		mc = mcTrump
-	elif candidate == 1:
-		mc = mcCruz
-	elif candidate == 2:
-		mc = mcRubio
-	elif candidate == 3:
-		mc = mcKasich
-	elif candidate == 4:
-		mc = mcCarson
-	elif candidate == 5:
-		mc = mcJeb
-	elif candidate == 6:
-		mc = mcChristie
-	for x in range(0,99):
+	mc = candidateInfo[candidate][0]
+	for x in range(0,499):
 		stringList.append(mc.generateString())
+	#Attempts to respond to question by searching strings for specific keywords in questions, else returns random message
 	if questionNum != None:
-		for x in xrange(0,99):
+		for x in range(0,499):
 			splitted = stringList[x].split()
 			for y in range(0, len(splitted)):
-				if (splitted[y].lower() in questions.questions[questionNum][1]) and (len(stringList[x].split()) > 4):
-					return candidates[candidate] + stringList[x]  + "\n"
-				else:
-					while (True):
-						randNum = random.randint(0,99)
-						splitted = stringList[randNum].split()
-						if (len(splitted) > 4):
-							return candidates[candidate] + stringList[randNum] + "\n"
+				if (splitted[y].lower() in questions.questions[questionNum][1]) and (len(stringList[x].split()) > 10):
+					return candidateInfo[candidate][3] + stringList[x]  + "\n"
+		while (True):
+			randNum = random.randint(0,498)
+			splitted = stringList[randNum].split()
+			if (len(splitted) > 15):
+				return candidateInfo[candidate][3] + stringList[randNum] + "\n"
+	#If no question number, picks a random messsage
 	else:
 		while (True):
-			randNum = random.randint(0,99)
+			randNum = random.randint(0,499)
 			splitted = stringList[randNum].split()
-			if (len(splitted) > 4):
-				return candidates[candidate] + stringList[randNum]  + "\n"
-	# pass
+			if (len(splitted) > 5):
+				return candidateInfo[candidate][3] + stringList[randNum]  + "\n"
 
+#determines if another candidate is mentioned and returns their number, else returns none
 def responded(msg):
 	for word in msg.split():
-		if word in trump_names:
-			return 0
-		elif word in cruz_names:
-			return 1
-		elif word in rubio_names:
-			return 2
-		elif word in kasich_names:
-			return 3
-		elif word in carson_names:
-			return 4
-		elif word in jeb_names:
-			return 5
-		elif word in christie_names:
-			return 6
+		for key in candidateInfo:
+			if word in candidateInfo[key][1]:
+				return key
 	return None
+
+candidateInfo = {}
 
 mcTrump = MarkovChain("db/trumpdb")
 mcCruz = MarkovChain("db/cruzdb")
@@ -103,26 +85,44 @@ mcCarson = MarkovChain("db/carsondb")
 mcJeb = MarkovChain("db/jebdb")
 mcChristie = MarkovChain("db/christiedb")
 
-formalCandidates = ["Mr. Trump", "Senator Cruz", "Senator Rubio", "Governor Kasich", "Dr. Carson", "Governor Bush", "Governor Christie"]
-candidates = ["TRUMP: ", "CRUZ: ", "RUBIO: ", "KASICH: ", "CARSON: ", "JEB: ", "CHRISTIE: "]
+#List of candidates to be included in Debate
+candidateList = ["Trump", "Rubio", "Christie", "Cruz", "Carson", "Jeb", "Kasich"]
 
-trump_names = ["Donald", "Donald's", "Trump", "Trump's", "Don"]
-jeb_names = ["Jeb", "JEB", "Jeb's", "JEB's", "Bush", "Bush's"]
-cruz_names = ["Cruz", "Cruz's", "Ted", "Ted's", "Rafeal"]
-rubio_names = ["Marco", "Marco's", "Rubio", "Rubio's"]
-kasich_names = ["Kasich", "Kasich's"]
-christie_names = ["Chris", "Christie", "Christie's"]
-carson_names = ["Ben", "Ben's", "Doctor", "Carson", "Carson's"]
+z = 0
+for name in candidateList:
+	if name == "Trump":
+		info = [mcTrump, ["Donald", "Donald's", "Trump", "Trump's", "Don"], "Mr. Trump", "TRUMP: "]
+	elif name == "Cruz":
+		info = [mcCruz, ["Cruz", "Cruz's", "Ted", "Ted's", "Rafeal"], "Senator Cruz", "CRUZ: "]
+	elif name == "Rubio":
+		info = [mcRubio, ["Marco", "Marco's", "Rubio", "Rubio's"], "Senator Rubio", "RUBIO: "]
+	elif name == "Kasich":
+		info = [mcKasich, ["Kasich", "Kasich's"], "Governor Kasich", "KASICH: "]
+	elif name == "Carson":
+		info = [mcCarson, ["Ben", "Ben's", "Doctor", "Carson", "Carson's"], "Dr. Carson", "CARSON: "]
+	elif name == "Jeb":
+		info = [mcJeb, ["Jeb", "JEB", "Jeb's", "JEB's", "Bush", "Bush's"], "Governor Bush", "JEB: "]
+	elif name == "Christie":
+		info = [mcChristie, ["Christie", "Christie's"] , "Governor Christie", "CHRISTIE: "]
+	candidateInfo[z] = info
+	z += 1
+
+numCandidates = len(candidateList) - 1	
 
 isQuestion = True
 randomChance = 0;
 lastCandidateNum = ""
 questionNum = ""
+
+#Range determines number of responses with a small chance of one more if last message is a question
 for x in range(0,10):
-	candidateNum = random.randint(0,6)
+	#Randomly generates a candidate by choosing their number
+	candidateNum = random.randint(0, numCandidates)
+	#Ensures chosen candidate did not speak last round
 	while (candidateNum == lastCandidateNum):
-		candidateNum = random.randint(0,6)
+		candidateNum = random.randint(0, numCandidates)
 	lastCandidateNum = candidateNum
+	#If its time for a question, it will ask one with a response, then turn isQuestion off
 	if isQuestion == True:
 		questionNum = random.randint(0,20)
 		print modQuestion(candidateNum, questionNum)
@@ -130,11 +130,14 @@ for x in range(0,10):
 		print msg
 		isQuestion = False
 		continue
+	#If someone was mentioned in the last msg, responded will return their number and they will respond
 	if responded(msg) != None:
 		msg = response(responded(msg))
 		print msg
 		continue
 	else:
+		#If candidate is not responding, base chance of mod asking question next round is 25%
+		#Every round of no response will increase the chances by 25%
 		if (random.randint(0,4) + randomChance) > 3:
 			isQuestion = True
 			randomChance = 0
