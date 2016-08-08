@@ -248,8 +248,8 @@ for x in range(0,20):
 	nameMention = responded(msg)
 	if nameMention != None:
 		msg = response(nameMention)
-		log(writeFile, msg, candidateNum)
-		debateDict[msgNum] = [msg, candidateInfo[candidateNum][3]]
+		log(writeFile, msg, nameMention)
+		debateDict[msgNum] = [msg, candidateInfo[nameMention][3]]
 		msgNum += 1
 		continue
 	else:
@@ -265,7 +265,7 @@ for x in range(0,20):
 		debateDict[msgNum] = [msg, candidateInfo[candidateNum][3]]
 		msgNum += 1
 
-msg = "That concludes tongight's 2016 Republican Debate. Thank you, and good night."
+msg = "That concludes tonight's 2016 Republican Debate. Thank you, and good night."
 log(writeFile, msg)
 debateDict[msgNum] = [msg, "mod"]
 msgNum +=1
